@@ -75,7 +75,10 @@ npx wrangler d1 execute icp-db --local --file=./db/schema.sql
 ```
 
 # 启动开发服务器
+```bash
 npm run dev
+```
+
 3. 生产环境部署 (Production)
 Step A: 推送代码到 GitHub
 ```bash
@@ -85,7 +88,9 @@ git commit -m "Initial deployment"
 git push origin main
 ```
 将你的代码推送到你的 GitHub 仓库（注意检查 .gitignore，不要上传 node_modules 和 .wrangler）。
-Step B: Cloudflare Pages 设置
+Step <br/>
+
+B: Cloudflare Pages 设置
 ```bash
 # 登录 Cloudflare Dashboard -> Workers & Pages -> Create Application -> Pages -> Connect to Git。
 # 选择你的仓库，配置如下：
@@ -97,12 +102,12 @@ ADMIN_PASSWORD: 设置你的后台登录密码 (例如 nebula-admin-888)。
 Step C: 绑定 D1 数据库 (最关键!)
 ```
 
-# 部署完成后，进入项目 Settings -> Functions。
-# 找到 D1 database bindings。
-# 点击 Add binding：
+部署完成后，进入项目 Settings -> Functions。<br/>
+找到 D1 database bindings。<br/>
+点击 Add binding：<br/>
 Variable name: DB (必须是大写 DB)<br/>
-D1 database: 选择你在命令行创建的 icp-db。
-# 重新部署：进入 Deployments -> 找到最新一次 -> 点击 Retry deployment。
+D1 database: 选择你在命令行创建的 icp-db。<br/>
+重新部署：进入 Deployments -> 找到最新一次 -> 点击 Retry deployment。<br/>
 
 
 Step D: 初始化线上数据库
