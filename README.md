@@ -77,6 +77,8 @@ npx wrangler d1 execute icp-db --local --file=./db/schema.sql
 # 启动开发服务器
 npm run dev
 
+```
+
 3. 生产环境部署 (Production)
 Step A: 推送代码到 GitHub
 将你的代码推送到你的 GitHub 仓库（注意检查 .gitignore，不要上传 node_modules 和 .wrangler）。
@@ -98,8 +100,10 @@ D1 database: 选择你在命令行创建的 icp-db。
 Step D: 初始化线上数据库
 在你的本地终端运行以下命令，将表结构推送到 Cloudflare 云端：
 
+```bash
 # 注意：这将直接操作线上数据库
 npx wrangler d1 execute icp-db --remote --file=./db/schema.sql
+``` 
 
 /// PROJECT_STATISTICS (项目统计)
 <div align="center">
