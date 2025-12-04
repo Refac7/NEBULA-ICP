@@ -78,7 +78,7 @@ npx wrangler d1 execute icp-db --local --file=./db/schema.sql
 
 # 启动开发服务器
 npm run dev
-
+```
 
 3. 生产环境部署 (Production)
 Step A: 推送代码到 GitHub
