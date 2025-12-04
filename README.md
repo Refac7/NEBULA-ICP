@@ -13,9 +13,11 @@
 
 </div>
 
+---
+
 ## /// SYSTEM.INTRO (项目简介)
 
-**PROJECT NEBULA** 是一个极简主义、高可视化的模拟 ICP 备案系统。它不仅仅是一个表单，更是一个具有**赛博朋克/黑客终端**美学的数字档案馆。
+**PROJECT NEBULA** 是一个极简主义、高可视化的模拟 ICP 备案系统。它不仅仅是一个表单，更是一个具有 **赛博朋克/黑客终端** 美学的数字档案馆。
 
 本项目旨在构建一个“数字生命”的登记处。每一个被收录的网站都像是一个被观察的实体，拥有独立的编号、快照和身份标识。系统摒弃了传统后台的繁琐，采用“三要素验证”机制（域名+备案号+私钥）实现无账户的修改与注销。
 
@@ -77,7 +79,6 @@ npx wrangler d1 execute icp-db --local --file=./db/schema.sql
 # 启动开发服务器
 npm run dev
 
-```
 
 3. 生产环境部署 (Production)
 Step A: 推送代码到 GitHub
@@ -100,14 +101,11 @@ D1 database: 选择你在命令行创建的 icp-db。
 Step D: 初始化线上数据库
 在你的本地终端运行以下命令，将表结构推送到 Cloudflare 云端：
 
-```bash
 # 注意：这将直接操作线上数据库
 npx wrangler d1 execute icp-db --remote --file=./db/schema.sql
-``` 
 
 /// PROJECT_STATISTICS (项目统计)
 <div align="center">
-<!-- GitHub Stats -->
 ![alt text](https://img.shields.io/github/stars/C-4-C-4/NEBULA-ICP?style=social)
 
 ![alt text](https://img.shields.io/github/forks/C-4-C-4/NEBULA-ICP?style=social)
@@ -115,7 +113,7 @@ npx wrangler d1 execute icp-db --remote --file=./db/schema.sql
 ![alt text](https://img.shields.io/github/issues/C-4-C-4/NEBULA-ICP)
 
 ![alt text](https://img.shields.io/github/last-commit/C-4-C-4/NEBULA-ICP)
-<!-- 代码语言分布 -->
+<br/>
 ![alt text](https://img.shields.io/github/languages/top/C-4-C-4/NEBULA-ICP)
 
 ![alt text](https://img.shields.io/github/repo-size/C-4-C-4/NEBULA-ICP)
@@ -126,5 +124,6 @@ Architect: CCCC4444
 Design Inspiration: Echo Log
 Snapshot Service: WordPress mShots
 Favicon Service: Favicon.im / Iowen API
+
 "We are not filing domains; we are giving digital entities an identity."
 —— PROJECT NEBULA
