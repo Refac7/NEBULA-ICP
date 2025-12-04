@@ -76,17 +76,21 @@ npx wrangler d1 execute icp-db --local --file=./db/schema.sql
 
 # 启动开发服务器
 npm run dev
+
 3. 生产环境部署 (Production)
 Step A: 推送代码到 GitHub
 将你的代码推送到你的 GitHub 仓库（注意检查 .gitignore，不要上传 node_modules 和 .wrangler）。
+
 Step B: Cloudflare Pages 设置
 登录 Cloudflare Dashboard -> Workers & Pages -> Create Application -> Pages -> Connect to Git。
+
 选择你的仓库，配置如下：
 Framework preset: Astro
 Build command: npm run build
 Output directory: dist
 设置环境变量 (Environment Variables):
 ADMIN_PASSWORD: 设置你的后台登录密码 (例如 nebula-admin-888)。
+
 Step C: 绑定 D1 数据库 (最关键!)
 部署完成后（第一次可能会失败，不用管），进入项目 Settings -> Functions。
 找到 D1 database bindings。
@@ -98,8 +102,11 @@ Step D: 初始化线上数据库
 在你的本地终端运行以下命令，将表结构推送到 Cloudflare 云端：
 code
 Bash
+
 # 注意：这将直接操作线上数据库
 npx wrangler d1 execute icp-db --remote --file=./db/schema.sql
+
+
 /// PROJECT_STATISTICS (项目统计)
 <div align="center">
 <!-- GitHub Stats -->
@@ -115,6 +122,7 @@ npx wrangler d1 execute icp-db --remote --file=./db/schema.sql
 
 ![alt text](https://img.shields.io/github/repo-size/C-4-C-4/NEBULA-ICP)
 </div>
+
 /// AUTHOR & CREDITS (作者与致谢)
 Architect: CCCC4444
 Design Inspiration: Echo Log
