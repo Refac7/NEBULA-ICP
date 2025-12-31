@@ -1,67 +1,218 @@
 ---
 const pathname = new URL(Astro.request.url).pathname;
-// 简单的路径判断：去掉末尾斜杠对比
 const currentPath = pathname.replace(/\/$/, '') || '/';
 const isArchivesPage = currentPath === '/archives';
+
+const links = [
+  { href: '/', label: '申请收录', active: currentPath === '/' },
+  { href: '/archives', label: '档案列表', active: currentPath === '/archives' },
+  { href: '/modify', label: '修改', active: currentPath === '/modify' },
+  { href: '/cancel', label: '注销', active: currentPath === '/cancel', isDestructive: true },
+];
 ---
 
-<nav class="w-full border-b-4 border-echo-dark bg-echo-bg sticky top-0 z-50">
-  <div class="max-w-[1400px] mx-auto px-4 h-16 flex items-center gap-4">
+<nav class="w-full border-b-4 border-echo-dark bg-echo-bg sticky top-0 z-50 font-sans">
+  <div class="max-w-[1400px] mx-auto px-4 h-16 flex items-center gap-4 justify-between">
     
-    <!-- 1. 左侧 LOGO -->
-    <a href="/" class="flex items-center gap-2 group flex-shrink-0">
-      <div class="bg-echo-orange text-white w-8 h-8 flex items-center justify-center font-black text-xs group-hover:bg-echo-dark transition-colors tracking-tighter">
+    <!-- 左侧图标 -->
+    <a href="/" class="flex items-center gap-3 group flex-shrink-0 z-50 relative">
+      <div class="bg-echo-orange text-white w-9 h-9 flex items-center justify-center font-mono font-black text-xs border-2 border-transparent group-hover:bg-echo-dark group-hover:text-white transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:rotate-180 shadow-[2px_2px_0_0_#000]">
         ICP
       </div>
-      <span class="font-black text-xl tracking-tighter text-echo-dark hidden sm:block">PROJECT NEBULA</span>
+      <div class="flex flex-col overflow-hidden">
+          <span class="font-black text-xl leading-none tracking-tighter text-echo-dark hidden md:block uppercase group-hover:text-echo-orange transition-colors duration-300">Project Nebula</span>
+          <span class="text-[0.6rem] font-mono leading-none text-gray-400 hidden md:block tracking-widest group-hover:tracking-[0.2em] transition-all duration-300">SYSTEM_V2</span>
+      </div>
     </a>
 
-    <!-- 2. 中间 搜索框 (仅在档案页显示，占据剩余空间) -->
-    <div class="flex-1 flex justify-center max-w-2xl mx-auto">
+    <!-- 搜索框 -->
+    <div class="flex-1 flex justify-center max-w-2xl mx-2 md:mx-auto">
       {isArchivesPage && (
-        <div class="relative w-full group">
-            <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none font-bold text-gray-400 text-xs">
-                SEARCH //
+        <div class="relative w-full group focus-within:z-10">
+            <div class="absolute inset-y-0 left-0 hidden sm:flex items-center justify-center w-24 bg-echo-dark text-white font-mono text-xs font-bold pointer-events-none transition-colors duration-300 group-focus-within:bg-echo-orange group-focus-within:text-black border-2 border-transparent group-focus-within:border-echo-orange z-10">
+                SEARCH_
             </div>
             <input 
                 id="global-search-input"
                 type="text" 
-                placeholder="DOMAIN OR ICP..." 
-                class="w-full bg-white border-2 border-black py-1.5 pl-20 pr-4 text-sm font-bold focus:outline-none focus:shadow-[4px_4px_0_0_#000] transition-all uppercase placeholder-gray-300"
+                placeholder="DOMAIN::ID" 
+                class="w-full bg-white border-2 border-echo-dark py-1.5 pl-2 pr-4 sm:pl-28 text-sm font-bold font-mono rounded-none focus:outline-none focus:shadow-[6px_6px_0_0_#F97316] transition-all duration-300 ease-out uppercase placeholder-gray-400 relative z-0"
             />
         </div>
       )}
     </div>
 
-    <!-- 3. 右侧 链接 -->
-    <div class="flex gap-4 sm:gap-6 text-sm font-bold flex-shrink-0">
-      <a href="/" class={`hover:text-echo-orange transition-colors ${currentPath === '/' ? 'text-echo-orange border-b-2 border-echo-orange' : 'text-echo-dark'}`}>
-        /// 申请收录
-      </a>
-      <a href="/archives" class={`hover:text-echo-orange transition-colors ${currentPath === '/archives' ? 'text-echo-orange border-b-2 border-echo-orange' : 'text-echo-dark'}`}>
-        /// 档案列表
-      </a>
-      <a href="/modify" class={`hover:text-echo-orange transition-colors ${currentPath === '/modify' ? 'text-echo-orange border-b-2 border-echo-orange' : 'text-echo-dark'}`}>
-        /// 修改
-      </a>
-      <!-- 新增注销入口 (红色高亮) -->
-      <a href="/cancel" class={`hover:text-red-500 transition-colors ${currentPath === '/cancel' ? 'text-red-500 border-b-2 border-red-500' : 'text-echo-dark'}`}>
-        /// 注销
-      </a>
+    <!-- 右侧 Desktop 链接 -->
+    <div class="hidden lg:flex gap-6 text-sm font-bold flex-shrink-0 items-center">
+      {links.map(link => (
+        <a 
+          href={link.href} 
+          class={`relative px-4 py-1.5 border-2 transition-all duration-300 ease-out group overflow-hidden ${
+            link.active 
+              ? (link.isDestructive ? 'bg-red-500 text-white border-black shadow-[4px_4px_0_0_#000]' : 'bg-echo-orange text-white border-black shadow-[4px_4px_0_0_#000]') 
+              : 'bg-transparent text-echo-dark border-transparent hover:border-black hover:shadow-[4px_4px_0_0_#000] hover:-translate-y-1'
+          }`}
+        >
+
+          {!link.active && (
+             <span class="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] origin-bottom"></span>
+          )}
+
+          <span class="relative z-10 flex items-center gap-2">
+            <span class={`font-mono text-[10px] transition-all duration-300 ${
+                link.active 
+                ? 'opacity-100' 
+                : 'opacity-0 -translate-x-2 group-hover:translate-x-0 group-hover:opacity-100'
+            }`}>
+                ///
+            </span>
+            <span class="tracking-tight uppercase">{link.label}</span>
+          </span>
+        </a>
+      ))}
     </div>
 
+    <!-- 移动端按钮 -->
+    <button id="menu-toggle" class="lg:hidden flex flex-col justify-center gap-1.5 w-10 h-10 border-2 border-echo-dark bg-white items-center active:translate-y-0.5 active:shadow-[2px_2px_0_0_#000] shadow-[4px_4px_0_0_#000] transition-all duration-200 z-50 rounded-none group hover:bg-gray-50">
+        <span class="block w-5 h-0.5 bg-echo-dark transition-all duration-300 origin-center group-hover:w-6" id="line-1"></span>
+        <span class="block w-5 h-0.5 bg-echo-dark transition-all duration-300 group-hover:w-4" id="line-2"></span>
+        <span class="block w-5 h-0.5 bg-echo-dark transition-all duration-300 origin-center group-hover:w-6" id="line-3"></span>
+    </button>
+
   </div>
+
+  <!-- 移动端抽屉菜单 -->
+  <div id="mobile-drawer" class="fixed inset-y-0 right-0 w-72 bg-echo-bg border-l-4 border-echo-dark transform translate-x-full z-40 md:hidden pt-24 flex flex-col justify-between shadow-[-10px_0_30px_-10px_rgba(0,0,0,0.3)] transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]">
+    <div class="flex flex-col px-6">
+      <div class="mb-6 font-mono text-xs text-gray-400 border-b-2 border-gray-300 pb-2 flex justify-between items-center">
+          <span>NAVIGATION_MODULE</span>
+          <span class="w-2 h-2 bg-green-500 animate-pulse rounded-full"></span>
+      </div>
+      
+      <div class="flex flex-col gap-3" id="drawer-links">
+        {links.map((link, index) => (
+          <a 
+            href={link.href} 
+            class={`menu-item-animate opacity-0 translate-x-12 group flex items-center justify-between p-4 border-2 text-lg font-black uppercase tracking-tight transition-all duration-200 active:scale-[0.98] ${
+              link.active 
+                ? (link.isDestructive ? 'bg-red-50 text-red-600 border-red-600 shadow-[4px_4px_0_0_#DC2626]' : 'bg-white text-echo-dark border-echo-dark shadow-[4px_4px_0_0_#F97316]') 
+                : 'border-transparent bg-transparent hover:border-echo-dark hover:bg-white hover:shadow-[4px_4px_0_0_#000] text-gray-600'
+            }`}
+            style={`transition-delay: ${index * 75}ms`} 
+          >
+            <span>{link.label}</span>
+            <span class={`font-mono text-xs transition-transform duration-300 ${link.active ? 'opacity-100' : 'opacity-0 -translate-x-2 group-hover:translate-x-0 group-hover:opacity-100'}`}>&lt;ENTER</span>
+          </a>
+        ))}
+      </div>
+    </div>
+    
+    <div class="p-6 bg-echo-dark text-echo-bg overflow-hidden relative mt-auto border-t-4 border-echo-orange">
+        <div class="font-mono text-[10px] leading-tight opacity-60 space-y-1">
+            <p>SYSTEM: <span class="text-green-400">ONLINE</span></p>
+            <p>ID: NEBULA-ICP</p>
+        </div>
+        <div class="absolute -right-2 -bottom-4 text-7xl font-black text-white opacity-5 rotate-[-10deg] pointer-events-none select-none tracking-tighter">
+            NEBULA
+        </div>
+    </div>
+  </div>
+
+  <div id="drawer-backdrop" class="fixed inset-0 bg-echo-dark/80 backdrop-blur-[2px] z-30 hidden md:hidden transition-opacity duration-500 opacity-0"></div>
 </nav>
 
-<!-- 客户端脚本：监听输入并广播事件 -->
+<style>
+    body.menu-open {
+        overflow: hidden;
+    }
+    
+    /* 抽屉打开时的状态 */
+    #mobile-drawer.drawer-open {
+        transform: translateX(0);
+    }
+    
+    /* 菜单项进场动画 */
+    #mobile-drawer.drawer-open .menu-item-animate {
+        opacity: 1;
+        transform: translateX(0);
+        /* 弹簧效果的进场曲线 */
+        transition: opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    /* 遮罩淡入 */
+    #drawer-backdrop.fade-in {
+        opacity: 1;
+    }
+</style>
+
 <script>
+  // 搜索事件
   const input = document.getElementById('global-search-input');
   if (input) {
     input.addEventListener('input', (e) => {
       // @ts-ignore
       const val = e.target.value;
-      // 发送自定义事件，通知 React 组件更新
       window.dispatchEvent(new CustomEvent('SEARCH_UPDATE', { detail: val }));
     });
   }
+
+  // 菜单控制逻辑
+  const menuBtn = document.getElementById('menu-toggle');
+  const drawer = document.getElementById('mobile-drawer');
+  const backdrop = document.getElementById('drawer-backdrop');
+  const lines = [
+      document.getElementById('line-1'), 
+      document.getElementById('line-2'), 
+      document.getElementById('line-3')
+  ];
+
+  let isMenuOpen = false;
+
+  function toggleMenu() {
+    isMenuOpen = !isMenuOpen;
+    const body = document.body;
+
+    if (isMenuOpen) {
+        // OPEN
+        backdrop?.classList.remove('hidden');
+        // 双重 requestAnimationFrame 确保 display:none 移除后 transition 能触发
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                drawer?.classList.add('drawer-open');
+                backdrop?.classList.add('fade-in');
+            });
+        });
+        
+        body.classList.add('menu-open');
+        
+        // 按钮变形
+        lines[0]?.classList.add('rotate-45', 'translate-y-2', 'w-5');
+        lines[0]?.classList.remove('group-hover:w-6');
+        lines[1]?.classList.add('opacity-0', 'translate-x-4');
+        lines[2]?.classList.add('-rotate-45', '-translate-y-2', 'w-5');
+        lines[2]?.classList.remove('group-hover:w-6');
+
+    } else {
+        // CLOSE
+        drawer?.classList.remove('drawer-open');
+        backdrop?.classList.remove('fade-in');
+        
+        body.classList.remove('menu-open');
+
+        // 等待动画结束后隐藏 Backdrop
+        setTimeout(() => {
+            if(!isMenuOpen) backdrop?.classList.add('hidden');
+        }, 500); // 匹配 CSS 的 duration-500
+
+        // 按钮复原
+        lines[0]?.classList.remove('rotate-45', 'translate-y-2', 'w-5');
+        lines[0]?.classList.add('group-hover:w-6');
+        lines[1]?.classList.remove('opacity-0', 'translate-x-4');
+        lines[2]?.classList.remove('-rotate-45', '-translate-y-2', 'w-5');
+        lines[2]?.classList.add('group-hover:w-6');
+    }
+  }
+
+  menuBtn?.addEventListener('click', toggleMenu);
+  backdrop?.addEventListener('click', toggleMenu);
 </script>
